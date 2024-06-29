@@ -1,5 +1,25 @@
 # rankify-contracts
 
+## 0.10.0
+
+### Minor Changes
+
+- [#50](https://github.com/rankify-it/contracts/pull/50) [`80e2198`](https://github.com/rankify-it/contracts/commit/80e2198289cf6fafae910d5a4f1d3442afabbbfb) Thanks [@peersky](https://github.com/peersky)! - Migration to v5
+
+- [#48](https://github.com/rankify-it/contracts/pull/48) [`d449bb2`](https://github.com/rankify-it/contracts/commit/d449bb2174c3959447d717bb0d0d64f617467a45) Thanks [@peersky](https://github.com/peersky)! - changed documentation generation system to be more readable and per file separated
+
+- [#53](https://github.com/rankify-it/contracts/pull/53) [`999e933`](https://github.com/rankify-it/contracts/commit/999e9339e318723137ddc2f9d640c54f157e67b9) Thanks [@peersky](https://github.com/peersky)! - added playbook functionality to execute state emulation
+
+- [#50](https://github.com/rankify-it/contracts/pull/50) [`80e2198`](https://github.com/rankify-it/contracts/commit/80e2198289cf6fafae910d5a4f1d3442afabbbfb) Thanks [@peersky](https://github.com/peersky)! - Migrated to oz contracts v5
+
+- [#31](https://github.com/rankify-it/contracts/pull/31) [`3da696b`](https://github.com/rankify-it/contracts/commit/3da696b43f43af8b3130bf7aa2d93575b656d66f) Thanks [@peersky](https://github.com/peersky)! - Introduced installer interfaces
+
+### Patch Changes
+
+- [#49](https://github.com/rankify-it/contracts/pull/49) [`ae43df3`](https://github.com/rankify-it/contracts/commit/ae43df3f35fdcd49d33d76eaf9b452dbe453e202) Thanks [@peersky](https://github.com/peersky)! - Fixed linter errors on docs templates directory
+
+- [#44](https://github.com/rankify-it/contracts/pull/44) [`55c3a85`](https://github.com/rankify-it/contracts/commit/55c3a8531a053905a94fc4626c0dd9c897ff46fe) Thanks [@peersky](https://github.com/peersky)! - moved to using newer pnpm version in ci and lockfile
+
 ## 0.9.4
 
 ### Patch Changes
