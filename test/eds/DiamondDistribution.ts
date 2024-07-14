@@ -8,15 +8,10 @@ import {
   DiamondCutFacet,
   DiamondCutFacet__factory,
   DiamondLoupeFacet,
-  MockDiamondInitialize,
   MockDiamondInitialize__factory,
-  MockDiamondDistribution,
   MockInitializedDiamondDistribution__factory,
   TestFacet,
 } from '../../types';
-import fs from 'fs';
-import path from 'path';
-import { JsonFragment } from '@ethersproject/abi';
 import utils from "../utils"
 
 
