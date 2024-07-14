@@ -24,12 +24,13 @@ abstract contract Distributor is IDistributor, CodeIndexer {
 
     function _addDistribution(bytes32 id, bytes32 initId) internal virtual {
         ICodeIndex codeIndex = getContractsIndex();
+        address initializerAddress = codeIndex.get(initId);
         if (codeIndex.get(id) == address(0)) revert DistributionNotFound(id);
-        if (codeIndex.get(initId) == address(0) && initId != bytes32(0))
+        if (initializerAddress == address(0) && initId != bytes32(0))
             revert InitializerNotFound(initId);
         if (distirbutionsSet.contains(id)) revert DistributionExists(id);
         distirbutionsSet.add(id);
-        initializers[id] = IInitializer(codeIndex.get(id));
+        initializers[id] = IInitializer(initializerAddress);
         emit DistributionAdded(id, initId);
     }
 
@@ -46,10 +47,14 @@ abstract contract Distributor is IDistributor, CodeIndexer {
         bytes4 selector = IInitializer.initialize.selector;
         // This ensures instance owner (distributor) performs initialization.
         // It is distirbutor responsibility to make sure calldata and initializer are safe to execute
-        (bool success, bytes memory result) = address(initializers[id]).delegatecall(
-            abi.encodeWithSelector(selector, args)
-        );
-        require(success, string(result));
+        address initializer = address(initializers[id]);
+        if(initializer != address(0))
+        {
+            (bool success, bytes memory result) = address(initializers[id]).delegatecall(
+                abi.encodeWithSelector(selector, args)
+            );
+            require(success, string(result));
+        }
         emit DistributedAndInitialized(id, args);
         return instances;
     }

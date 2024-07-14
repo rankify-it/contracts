@@ -8,8 +8,8 @@ import {
   DiamondCutFacet,
   DiamondCutFacet__factory,
   DiamondLoupeFacet,
+  MockDiamondDistribution__factory,
   MockDiamondInitialize__factory,
-  MockInitializedDiamondDistribution__factory,
   TestFacet,
 } from '../../types';
 import utils from "../utils"
@@ -77,7 +77,7 @@ describe('DiamondDistribution', function () {
   it('Should emit on initialized', async function () {
     const DiamondDistribution = (await ethers.getContractFactory(
       'MockDiamondDistribution',
-    )) as MockInitializedDiamondDistribution__factory;
+    )) as MockDiamondDistribution__factory;
 
     const tx = await DiamondDistribution.deploy(
         diamondId,
@@ -91,7 +91,7 @@ describe('DiamondDistribution', function () {
   it('Should emit respond on facet requests', async function () {
     const DiamondDistribution = (await ethers.getContractFactory(
       'MockDiamondDistribution',
-    )) as MockInitializedDiamondDistribution__factory;
+    )) as MockDiamondDistribution__factory;
     // mockDiamondInitialize;
     const tx = await DiamondDistribution.deploy(
         diamondId,

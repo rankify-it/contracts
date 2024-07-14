@@ -7,7 +7,7 @@ import "../abstracts/CodeIndexer.sol";
 import "../interfaces/IInitializer.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "../abstracts/Distributor.sol";
-contract RankifyInstanceDistributor is Distributor, Ownable {
+contract OwnableDistributor is Distributor, Ownable {
 
     constructor (address _owner) Ownable(_owner) {
 
