@@ -80,7 +80,9 @@ abstract contract Installer is IInstaller {
         return _instancesDistributor[instance] != address(0);
     }
 
-    function distributorOf(address instance) public view returns (IDistributor) {}
+    function distributorOf(address instance) public view returns (IDistributor) {
+        return IDistributor(_instancesDistributor[instance]);
+    }
 
     function target() public view returns (address) {
         return _target;
