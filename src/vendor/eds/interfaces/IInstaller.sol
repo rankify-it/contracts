@@ -15,7 +15,7 @@ interface IInstaller is ILayer {
 
     function isDistributor(IDistributor distributor) external view returns (bool);
 
-    function getDistibutors() external view returns (IDistributor[] memory);
+    function getDistibutors() external view returns (address[] memory);
 
     event Installed(address indexed instance, bytes32 indexed distributionId, bytes32 indexed permissions, bytes args);
     event Uninstalled(address indexed instance);
@@ -36,7 +36,7 @@ interface IInstaller is ILayer {
 
     function distributorOf(address instance) external view returns (IDistributor);
 
-    function target() external pure returns (address);
+    function target() external view returns (address);
 
     error NotAnInstance(address instance);
 }
