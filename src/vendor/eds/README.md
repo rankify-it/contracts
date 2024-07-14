@@ -10,6 +10,7 @@ Contents:
 - **CodeIndex**: Simple contract allowing anyone to register association between a bytecode and it's location on chain
 - **Distribution**: Contract that allows to instantiate from same resource (bytecode)
 - **Distributor**: Contract that allows to instantiate from multiple resources (bytecodes)
+- **Installer**: Contract that allows to install and manage multiple instances from multiple distributors
 
 ## End-goal
 
