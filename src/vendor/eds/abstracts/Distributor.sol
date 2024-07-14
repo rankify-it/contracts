@@ -6,12 +6,12 @@ import "../interfaces/IDistributor.sol";
 import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 import "../interfaces/IInitializer.sol";
 import "../abstracts/CodeIndexer.sol";
+
 abstract contract Distributor is IDistributor, CodeIndexer {
     using EnumerableSet for EnumerableSet.Bytes32Set;
     EnumerableSet.Bytes32Set private distirbutionsSet;
     mapping(bytes32 => IInitializer) private initializers;
     mapping(address => bytes32) private instancesDistribution;
-
 
     function getDistributions() public view returns (bytes32[] memory) {
         return distirbutionsSet.values();
@@ -26,8 +26,7 @@ abstract contract Distributor is IDistributor, CodeIndexer {
         ICodeIndex codeIndex = getContractsIndex();
         address initializerAddress = codeIndex.get(initId);
         if (codeIndex.get(id) == address(0)) revert DistributionNotFound(id);
-        if (initializerAddress == address(0) && initId != bytes32(0))
-            revert InitializerNotFound(initId);
+        if (initializerAddress == address(0) && initId != bytes32(0)) revert InitializerNotFound(initId);
         if (distirbutionsSet.contains(id)) revert DistributionExists(id);
         distirbutionsSet.add(id);
         initializers[id] = IInitializer(initializerAddress);
@@ -41,15 +40,14 @@ abstract contract Distributor is IDistributor, CodeIndexer {
     }
 
     function _instantiate(bytes32 id, bytes calldata args) internal virtual returns (address[] memory instances) {
-         ICodeIndex codeIndex = getContractsIndex();
+        ICodeIndex codeIndex = getContractsIndex();
         if (!distirbutionsSet.contains(id)) revert DistributionNotFound(id);
         instances = IDistribution(codeIndex.get(id)).instantiate();
         bytes4 selector = IInitializer.initialize.selector;
         // This ensures instance owner (distributor) performs initialization.
         // It is distirbutor responsibility to make sure calldata and initializer are safe to execute
         address initializer = address(initializers[id]);
-        if(initializer != address(0))
-        {
+        if (initializer != address(0)) {
             (bool success, bytes memory result) = address(initializers[id]).delegatecall(
                 abi.encodeWithSelector(selector, args)
             );
@@ -59,7 +57,7 @@ abstract contract Distributor is IDistributor, CodeIndexer {
         return instances;
     }
 
-     function beforeCallValidation(
+    function beforeCallValidation(
         bytes memory layerConfig,
         bytes4 selector,
         address sender,
@@ -67,13 +65,10 @@ abstract contract Distributor is IDistributor, CodeIndexer {
         bytes memory data
     ) public view returns (bytes memory) {
         bytes32 id = instancesDistribution[sender];
-        if(id != bytes32(0) && distirbutionsSet.contains(id) == true)
-        {
+        if (id != bytes32(0) && distirbutionsSet.contains(id) == true) {
             return "";
-        }
-        else
-        {
-             revert InvalidInstance(sender);
+        } else {
+            revert InvalidInstance(sender);
         }
     }
 
@@ -84,7 +79,5 @@ abstract contract Distributor is IDistributor, CodeIndexer {
         uint256 value,
         bytes memory data,
         bytes memory beforeCallResult
-    ) public {
-    }
-
+    ) public {}
 }
