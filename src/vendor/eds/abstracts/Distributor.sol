@@ -4,37 +4,43 @@ pragma solidity ^0.8.20;
 import "../interfaces/IDistribution.sol";
 import "../interfaces/IDistributor.sol";
 import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
-import "../interfaces/ICodeIndex.sol";
 import "../interfaces/IInitializer.sol";
-abstract contract Distributor is IDistributor {
+import "../abstracts/CodeIndexer.sol";
+abstract contract Distributor is IDistributor, CodeIndexer {
     using EnumerableSet for EnumerableSet.Bytes32Set;
-    ICodeIndex immutable codeIndex;
     EnumerableSet.Bytes32Set private distirbutionsSet;
     mapping(bytes32 => IInitializer) private initializers;
+    mapping(address => bytes32) private instancesDistribution;
 
-    constructor(ICodeIndex _codeIndex) {
-        codeIndex = _codeIndex;
-    }
 
     function getDistributions() public view returns (bytes32[] memory) {
         return distirbutionsSet.values();
     }
 
     function getDistributionURI(bytes32 id) public view returns (string memory) {
+        ICodeIndex codeIndex = getContractsIndex();
         return IDistribution(codeIndex.get(id)).getMetadata();
     }
 
-    function addDistribution(bytes32 newDistribution, bytes32 initializer) external {
-        if (codeIndex.get(newDistribution) == address(0)) revert DistributionNotFound(newDistribution);
-        if (codeIndex.get(initializer) == address(0) && initializer != bytes32(0))
-            revert InitializerNotFound(initializer);
-        if (distirbutionsSet.contains(newDistribution)) revert DistributionExists(newDistribution);
-        distirbutionsSet.add(newDistribution);
-        initializers[newDistribution] = IInitializer(codeIndex.get(newDistribution));
-        emit DistributionAdded(newDistribution, initializer);
+    function _addDistribution(bytes32 id, bytes32 initId) internal virtual {
+        ICodeIndex codeIndex = getContractsIndex();
+        if (codeIndex.get(id) == address(0)) revert DistributionNotFound(id);
+        if (codeIndex.get(initId) == address(0) && initId != bytes32(0))
+            revert InitializerNotFound(initId);
+        if (distirbutionsSet.contains(id)) revert DistributionExists(id);
+        distirbutionsSet.add(id);
+        initializers[id] = IInitializer(codeIndex.get(id));
+        emit DistributionAdded(id, initId);
     }
 
-    function instantiate(bytes32 id, bytes calldata args) external returns (address[] memory instances) {
+    function _removeDistribution(bytes32 id) internal virtual {
+        if (!distirbutionsSet.contains(id)) revert DistributionNotFound(id);
+        distirbutionsSet.remove(id);
+        emit DistributionRemoved(id);
+    }
+
+    function _instantiate(bytes32 id, bytes calldata args) internal virtual returns (address[] memory instances) {
+         ICodeIndex codeIndex = getContractsIndex();
         if (!distirbutionsSet.contains(id)) revert DistributionNotFound(id);
         instances = IDistribution(codeIndex.get(id)).instantiate();
         bytes4 selector = IInitializer.initialize.selector;
@@ -47,4 +53,33 @@ abstract contract Distributor is IDistributor {
         emit DistributedAndInitialized(id, args);
         return instances;
     }
+
+     function beforeCallValidation(
+        bytes memory layerConfig,
+        bytes4 selector,
+        address sender,
+        uint256 value,
+        bytes memory data
+    ) public view returns (bytes memory) {
+        bytes32 id = instancesDistribution[sender];
+        if(id != bytes32(0) && distirbutionsSet.contains(id) == true)
+        {
+            return "";
+        }
+        else
+        {
+             revert InvalidInstance(sender);
+        }
+    }
+
+    function afterCallValidation(
+        bytes memory layerConfig,
+        bytes4 selector,
+        address sender,
+        uint256 value,
+        bytes memory data,
+        bytes memory beforeCallResult
+    ) public {
+    }
+
 }
