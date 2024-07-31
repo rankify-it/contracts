@@ -1,5 +1,33 @@
 # rankify-contracts
 
+## 0.10.0
+
+### Minor Changes
+
+- [#50](https://github.com/rankify-it/contracts/pull/50) [`80e2198`](https://github.com/rankify-it/contracts/commit/80e2198289cf6fafae910d5a4f1d3442afabbbfb) Thanks [@peersky](https://github.com/peersky)! - Migration to v5
+
+- [#48](https://github.com/rankify-it/contracts/pull/48) [`d449bb2`](https://github.com/rankify-it/contracts/commit/d449bb2174c3959447d717bb0d0d64f617467a45) Thanks [@peersky](https://github.com/peersky)! - changed documentation generation system to be more readable and per file separated
+
+- [#61](https://github.com/rankify-it/contracts/pull/61) [`db186f7`](https://github.com/rankify-it/contracts/commit/db186f717e1babebf6c1653afb7862d2120e545e) Thanks [@peersky](https://github.com/peersky)! - Updated readme
+
+- [#53](https://github.com/rankify-it/contracts/pull/53) [`999e933`](https://github.com/rankify-it/contracts/commit/999e9339e318723137ddc2f9d640c54f157e67b9) Thanks [@peersky](https://github.com/peersky)! - added playbook functionality to execute state emulation
+
+- [#50](https://github.com/rankify-it/contracts/pull/50) [`80e2198`](https://github.com/rankify-it/contracts/commit/80e2198289cf6fafae910d5a4f1d3442afabbbfb) Thanks [@peersky](https://github.com/peersky)! - Migrated to oz contracts v5
+
+- [#55](https://github.com/rankify-it/contracts/pull/55) [`73ea44f`](https://github.com/rankify-it/contracts/commit/73ea44f3e83cd3eab3d8f9db1a605606cfcfed21) Thanks [@peersky](https://github.com/peersky)! - generic diamond factory implementation via Ethereum Distribution System
+
+- [#60](https://github.com/rankify-it/contracts/pull/60) [`55fc1a6`](https://github.com/rankify-it/contracts/commit/55fc1a6ed9f1b7fc4520c3ec6fab5c7f7ae7a3b5) Thanks [@theKosmoss](https://github.com/theKosmoss)! - Created new playbook scenario 'gameCreated' and some general playbooks refactors
+
+- [#31](https://github.com/rankify-it/contracts/pull/31) [`3da696b`](https://github.com/rankify-it/contracts/commit/3da696b43f43af8b3130bf7aa2d93575b656d66f) Thanks [@peersky](https://github.com/peersky)! - Introduced installer interfaces
+
+### Patch Changes
+
+- [#54](https://github.com/rankify-it/contracts/pull/54) [`569fb0f`](https://github.com/rankify-it/contracts/commit/569fb0f7cc0cd7a99065fae3873296378b8ffd1a) Thanks [@peersky](https://github.com/peersky)! - corrected interface file names
+
+- [#49](https://github.com/rankify-it/contracts/pull/49) [`ae43df3`](https://github.com/rankify-it/contracts/commit/ae43df3f35fdcd49d33d76eaf9b452dbe453e202) Thanks [@peersky](https://github.com/peersky)! - Fixed linter errors on docs templates directory
+
+- [#44](https://github.com/rankify-it/contracts/pull/44) [`55c3a85`](https://github.com/rankify-it/contracts/commit/55c3a8531a053905a94fc4626c0dd9c897ff46fe) Thanks [@peersky](https://github.com/peersky)! - moved to using newer pnpm version in ci and lockfile
+
 ## 0.9.4
 
 ### Patch Changes
